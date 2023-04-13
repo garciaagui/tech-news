@@ -1,6 +1,7 @@
 import requests
 import time
 from bs4 import BeautifulSoup
+import re
 
 
 def fetch(url):
@@ -46,13 +47,43 @@ def scrape_next_page_link(html_content):
     return next_page_link["href"]
 
 
-# html = fetch("https://blog.betrybe.com")
-# print(scrape_next_page_link(html))
+def get_only_time(reading_time: str):
+    number_extracted = re.sub("\D", "", reading_time)
+    return int(number_extracted)
 
 
 # Requisito 4
 def scrape_news(html_content):
-    """Seu código deve vir aqui"""
+    soup = BeautifulSoup(html_content, "html.parser")
+    url = soup.find("div", {"class": "pk-share-buttons-wrap"})[
+        "data-share-url"
+    ]
+    title = (soup.find("h1", {"class": "entry-title"}).text).strip()
+    timestamp = soup.find("li", {"class": "meta-date"}).text
+    writer = soup.find("span", {"class": "author"}).text
+    reading_time = get_only_time(
+        soup.find("li", {"class": "meta-reading-time"}).text
+    )
+    summary = (soup.find("div", {"class": "entry-content"}).p.text).strip()
+    category = (
+        soup.find("a", {"class": "category-style"})
+        .find("span", {"class": "label"})
+        .text
+    )
+
+    return dict(
+        url=url,
+        title=title,
+        timestamp=timestamp,
+        writer=writer,
+        reading_time=reading_time,
+        summary=summary,
+        category=category,
+    )
+
+
+html = fetch("https://blog.betrybe.com/tecnologia/cabos-de-rede/")
+print(scrape_news(html))
 
 
 # Requisito 5

@@ -47,43 +47,53 @@ def scrape_next_page_link(html_content):
     return next_page_link["href"]
 
 
-def get_only_time(reading_time: str):
-    number_extracted = re.sub("\D", "", reading_time)
+def get_url(soup) -> str:
+    link_element = soup.find("div", {"class": "pk-share-buttons-wrap"})
+    return link_element["data-share-url"]
+
+
+def get_title(soup) -> str:
+    title_content = soup.find("h1", {"class": "entry-title"}).text
+    return title_content.strip()
+
+
+def get_timestamp(soup) -> str:
+    return soup.find("li", {"class": "meta-date"}).text
+
+
+def get_writer(soup) -> str:
+    return soup.find("span", {"class": "author"}).text
+
+
+def get_reading_time(soup) -> int:
+    reading_time_element = soup.find("li", {"class": "meta-reading-time"}).text
+    number_extracted = re.sub("\D", "", reading_time_element)
     return int(number_extracted)
 
 
-# Requisito 4
+def get_summary(soup) -> str:
+    summary_content = soup.find("div", {"class": "entry-content"}).p.text
+    return summary_content.strip()
+
+
+def get_category(soup) -> str:
+    category_element = soup.find("a", {"class": "category-style"})
+
+    return category_element.find("span", {"class": "label"}).text
+
+
 def scrape_news(html_content):
     soup = BeautifulSoup(html_content, "html.parser")
-    url = soup.find("div", {"class": "pk-share-buttons-wrap"})[
-        "data-share-url"
-    ]
-    title = (soup.find("h1", {"class": "entry-title"}).text).strip()
-    timestamp = soup.find("li", {"class": "meta-date"}).text
-    writer = soup.find("span", {"class": "author"}).text
-    reading_time = get_only_time(
-        soup.find("li", {"class": "meta-reading-time"}).text
-    )
-    summary = (soup.find("div", {"class": "entry-content"}).p.text).strip()
-    category = (
-        soup.find("a", {"class": "category-style"})
-        .find("span", {"class": "label"})
-        .text
-    )
 
     return dict(
-        url=url,
-        title=title,
-        timestamp=timestamp,
-        writer=writer,
-        reading_time=reading_time,
-        summary=summary,
-        category=category,
+        url=get_url(soup),
+        title=get_title(soup),
+        timestamp=get_timestamp(soup),
+        writer=get_writer(soup),
+        reading_time=get_reading_time(soup),
+        summary=get_summary(soup),
+        category=get_category(soup),
     )
-
-
-html = fetch("https://blog.betrybe.com/tecnologia/cabos-de-rede/")
-print(scrape_news(html))
 
 
 # Requisito 5

@@ -36,9 +36,18 @@ def scrape_updates(html_content):
     return news_urls
 
 
-# Requisito 3
 def scrape_next_page_link(html_content):
-    """Seu código deve vir aqui"""
+    soup = BeautifulSoup(html_content, "html.parser")
+    next_page_link = soup.find("a", {"class": "next page-numbers"})
+
+    if not next_page_link:
+        return None
+
+    return next_page_link["href"]
+
+
+# html = fetch("https://blog.betrybe.com")
+# print(scrape_next_page_link(html))
 
 
 # Requisito 4

@@ -39,6 +39,13 @@ def search_by_date(date):
     return found_news
 
 
-# Requisito 9
-def search_by_category(category):
-    """Seu código deve vir aqui"""
+def search_by_category(category: str):
+    CATEGORY_REGEX = re.compile(category, re.IGNORECASE)
+
+    found_news = list()
+    query = {"category": {"$regex": CATEGORY_REGEX}}
+
+    for news in search_news(query):
+        found_news.append((news["title"], news["url"]))
+
+    return found_news

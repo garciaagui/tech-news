@@ -1,5 +1,8 @@
 from ..database import search_news
 
+from datetime import datetime
+import re
+
 
 def search_by_title(title: str):
     found_news = list()
@@ -11,9 +14,29 @@ def search_by_title(title: str):
     return found_news
 
 
-# Requisito 8
+def convert_date(date):
+    DATE_REGEX = r"\d{4}-\d{2}-\d{2}"
+
+    try:
+        if re.match(DATE_REGEX, date):
+            return datetime.strptime(date, "%Y-%m-%d").strftime("%d/%m/%Y")
+        else:
+            raise Exception
+
+    except (Exception):
+        raise ValueError("Data inválida")
+
+
 def search_by_date(date):
-    """Seu código deve vir aqui"""
+    found_news = list()
+    converted_date = convert_date(date)
+
+    query = {"timestamp": converted_date}
+
+    for news in search_news(query):
+        found_news.append((news["title"], news["url"]))
+
+    return found_news
 
 
 # Requisito 9

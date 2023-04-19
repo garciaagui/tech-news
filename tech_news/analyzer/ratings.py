@@ -11,16 +11,16 @@ def get_categories():
     return categories
 
 
-def top_5_categories():
+def get_top_5_categories():
     categories = get_categories()
     ratings = list()
 
     for category in categories:
-        category_counter = tuple((category, len(search_by_category(category))))
-        ratings.append(category_counter)
+        news_number = len(search_by_category(category))
+        ratings.append((category, news_number))
 
     ratings.sort(key=lambda a: (-a[1], a[0]))
-    # -a[1] -> 1o criteria - Sort category counter in descending order
-    # a[0] -> 2o criteria - Sort category name in ascending order
+    # -a[1] -> 1o criteria - Sort news number in descending order
+    # a[0] -> 2o criteria - Sort category name alphabetically
 
     return [rating[0] for rating in ratings[:5]]

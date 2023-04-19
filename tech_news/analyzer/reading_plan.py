@@ -6,9 +6,8 @@ class ReadingPlanService:
     @staticmethod
     def _db_news_proxy():
         """
-        Esse proxy existe para que seja possível mockar
-        a função `find_news` do módulo `tech_news.database`
-        sem afetar o teste do requisito.
+        This proxy exists so that it is possible to mock
+        the `find_news` function of the `tech_news.database`.
         """
         return find_news()
 
@@ -17,7 +16,7 @@ class ReadingPlanService:
         cls, available_time: int
     ) -> Dict[str, List]:
         if available_time <= 0:
-            raise ValueError("Valor 'available_time' deve ser maior que zero")
+            raise ValueError("'available_time' must be greater than zero")
 
         result = {"readable": [], "unreadable": []}
         for new in cls._db_news_proxy():
@@ -52,7 +51,6 @@ class ReadingPlanService:
     def _fit_to_existing_group(
         cls, result: Dict[str, List], new: Dict[str, Any]
     ):
-
         for group in result["readable"]:
             if new["reading_time"] >= group["unfilled_time"]:
                 continue

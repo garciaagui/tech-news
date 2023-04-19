@@ -23,8 +23,8 @@ def convert_date(date):
         else:
             raise Exception
 
-    except (Exception):
-        raise ValueError("Data inválida")
+    except Exception:
+        raise ValueError("Error: Invalid date")
 
 
 def search_by_date(date):

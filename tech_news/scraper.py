@@ -119,6 +119,7 @@ def get_tech_news(amount):
         range = define_range(amount, counter, len(news_urls))
 
         for url in news_urls[:(range)]:
+            print(url)
             news_page_html_content = fetch(url)
             news_to_insert.append(scrape_news(news_page_html_content))
 

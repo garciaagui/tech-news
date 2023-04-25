@@ -1,6 +1,6 @@
 <a name="readme-top"></a>
 
-<h1 align="center">Inventory Report 📦</h1>
+<h1 align="center">Tech News 📰</h1>
 
 > [🇺🇸 Click here to access the English version.](README.md)
 
@@ -87,7 +87,7 @@ source .venv/bin/activate
 python3 -m pip install -r dev-requirements.txt
 ```
 
-6. Se você não tiver o MongoDB instalado localmente, inicie-o via Docker
+6. Se você não tiver o MongoDB instalado localmente, inicie-o via Docker.
 
 ```
 docker-compose up -d mongodb

@@ -27,7 +27,7 @@ Tech News is a [Python][python-url] project that uses [Beautiful Soup][bs4-url] 
 
 ## Technologies
 
-The project was developed in [Python][python-url] and tested with [Pytest][pytest-url]. The database used was [MongoDB][mongodb-url] and the connection to it was established through the [PyMongo][pymongo-url] library. [Flake8][flake8-url] ensured code quality while [Beautiful Soup][bs4-url] made it easy to scrape the web.
+The project was developed in [Python][python-url] and tested with [Pytest][pytest-url]. The database used was [MongoDB][mongodb-url] and the connection and interaction to it was established through the [PyMongo][pymongo-url] library. [Flake8][flake8-url] ensured code quality while [Beautiful Soup][bs4-url] performed web scraping.
 
 [![Python][python-badge]][python-url] [![MongoDB][mongodb-badge]][mongodb-url] [![PyMongo][pymongo-badge]][pymongo-url] [![Beautiful Soup][bs4-badge]][bs4-url] [![Pytest][pytest-badge]][pytest-url] [![Flake8][flake8-badge]][flake8-url]
 

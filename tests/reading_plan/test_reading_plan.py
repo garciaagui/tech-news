@@ -38,8 +38,7 @@ def mocked_find_news_data():
     return mock
 
 
-def test_reading_plan_group_news(mocked_find_news_data):
-
+def test_reading_plan_group_news_with_valid_input(mocked_find_news_data):
     expected = {
         "readable": [
             {
@@ -57,14 +56,16 @@ def test_reading_plan_group_news(mocked_find_news_data):
     with patch.object(
         ReadingPlanService, "_db_news_proxy", mocked_find_news_data
     ):
-
-        # Valid input
         result = ReadingPlanService.group_news_for_available_time(10)
         assert result == expected
 
-        # Invalid input
+
+def test_reading_plan_group_news_with_invalid_input(mocked_find_news_data):
+    with patch.object(
+        ReadingPlanService, "_db_news_proxy", mocked_find_news_data
+    ):
         with pytest.raises(
             ValueError,
-            match="Valor 'available_time' deve ser maior que zero",
+            match="'available_time' must be greater than zero",
         ):
             ReadingPlanService.group_news_for_available_time(-1)
